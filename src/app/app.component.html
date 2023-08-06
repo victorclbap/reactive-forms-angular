@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <!-- nested form -->
+        <!-- formGroupName ao invés de formGroup para forms nested-->
+
+        <div formGroupName="userData">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              formControlName="username"
+            />
+            <span
+              *ngIf="
+                !signUpForm.get('userData.username').valid &&
+                signUpForm.get('userData.username').touched
+              "
+              class="help-block"
+            >
+              <span
+                *ngIf="
+                  signUpForm.get('userData.username').errors['nameIsForbidden']
+                "
+                >This name is invalid!</span
+              >
+              <span
+                *ngIf="signUpForm.get('userData.username').errors['required']"
+                >This field is required!</span
+              >
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="email">email</label>
+            <input
+              type="text"
+              id="email"
+              class="form-control"
+              formControlName="email"
+            />
+            <span
+              *ngIf="
+                !signUpForm.get('userData.email').valid &&
+                signUpForm.get('userData.email').touched
+              "
+              class="help-block"
+              >Please enter a valid email!</span
+            >
+          </div>
+        </div>
+
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input formControlName="gender" type="radio" [value]="gender" />{{
+              gender
+            }}
+          </label>
+        </div>
+        <span *ngIf="!signUpForm.valid && signUpForm.touched" class="help-block"
+          >Please enter valid data!</span
+        >
+
+        <div formArrayName="hobbies">
+          <h4>Your hobbies</h4>
+          <!-- type="button" nao envia o form acidentalmente -->
+          <button class="btn btn-default" type="button" (click)="onAddHobby()">
+            Add Hobby
+          </button>
+          <!-- adiciona controls dinamicamente no ts-->
+          <div
+            class="form-group"
+            *ngFor="let hobbyControl of hobbiesControls; let i = index"
+          >
+            <input type="text" class="form-control" [formControlName]="i" />
+          </div>
+        </div>
+
+        <!-- type="submit" p/ enviar form -->
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

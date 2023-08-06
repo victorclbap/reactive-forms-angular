@@ -1,0 +1,10 @@
+.container {
+  margin-top: 30px;
+}
+
+
+/* quando o elemento é invalido e foi acessado, adiciona borda vermelha */
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
